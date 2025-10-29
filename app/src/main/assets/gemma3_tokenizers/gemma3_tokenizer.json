@@ -1,0 +1,13 @@
+﻿{
+  "version": "1.0",
+  "model": "gemma3-1b",
+  "tokenizer": "sentencepiece",
+  "vocab_size": 256000,
+  "special_tokens": {
+    "<pad>": 0,
+    "<eos>": 1,
+    "<bos>": 2,
+    "<unk>": 3
+  },
+  "note": "Placeholder tokenizer - replace with actual Gemma3-1B tokenizer"
+}

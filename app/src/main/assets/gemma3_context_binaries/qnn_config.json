@@ -1,0 +1,11 @@
+{
+  "backend": "qnn",
+  "model_mode": "hybrid",
+  "max_seq_len": 32768,
+  "prefill_ar_len": 128,
+  "temperature": 0.0,
+  "soc_model": "69",
+  "hexagon_version": "v79",
+  "model_name": "gemma-3-1b-it",
+  "dtype": "bfloat16"
+}

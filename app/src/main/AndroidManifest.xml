@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -43,6 +43,16 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <activity
+            android:name=".ui.ExecutorTorchGemma3TestActivity"
+            android:exported="true"
+            android:label="Gemma3-1B Test"
+            android:theme="@style/Theme.EdgeAI" />
+        <activity
+            android:name=".ui.ExecutorTorchCLIPTestActivity"
+            android:exported="true"
+            android:label="ExecuTorch CLIP Test"
+            android:theme="@style/Theme.EdgeAI" />
     </application>
 
 </manifest>

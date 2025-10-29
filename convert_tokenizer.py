@@ -6,48 +6,44 @@ Based on: https://github.com/pytorch/executorch/tree/a1652f97b721dccc4f1f2585d3e
 
 import os
 import sys
-import json
+import argparse
 import struct
 from pathlib import Path
 
-def convert_tokenizer():
-    """Convert tokenizer.model to tokenizer.bin format"""
-    
-    # Paths
-    tokenizer_model_path = "app/src/main/assets/models/tokenizer.model"
-    tokenizer_bin_path = "app/src/main/assets/models/tokenizer.bin"
-    
+def convert_tokenizer(tokenizer_model_path: str, tokenizer_bin_path: str, vocab_size: int) -> bool:
     print("🔄 Converting tokenizer.model to tokenizer.bin...")
-    
+
     try:
-        # Read the tokenizer.model file
         if not os.path.exists(tokenizer_model_path):
             print(f"❌ Tokenizer model not found: {tokenizer_model_path}")
             return False
-            
+
         with open(tokenizer_model_path, 'rb') as f:
             tokenizer_data = f.read()
-            
+
         print(f"📦 Read tokenizer.model: {len(tokenizer_data)} bytes")
-        
-        # Create tokenizer.bin with proper format
+
+        os.makedirs(os.path.dirname(tokenizer_bin_path), exist_ok=True)
         with open(tokenizer_bin_path, 'wb') as f:
-            # Write header
             f.write(b'SPM\x00')  # SentencePiece Model magic
-            f.write(struct.pack('<I', 32000))  # vocab_size
-            
-            # Write tokenizer data
+            f.write(struct.pack('<I', vocab_size))  # vocab_size header required by QNN pipeline
             f.write(tokenizer_data)
-            
-        print(f"✅ Created tokenizer.bin: {os.path.getsize(tokenizer_bin_path)} bytes")
+
+        print(f"✅ Created tokenizer.bin: {os.path.getsize(tokenizer_bin_path)} bytes (vocab_size={vocab_size})")
         return True
-        
+
     except Exception as e:
         print(f"❌ Error converting tokenizer: {e}")
         return False
 
 if __name__ == "__main__":
-    success = convert_tokenizer()
+    parser = argparse.ArgumentParser(description="Convert tokenizer.model to tokenizer.bin for ExecuTorch/QNN")
+    parser.add_argument("--model", default="app/src/main/assets/models/tokenizer.model", help="Path to tokenizer.model")
+    parser.add_argument("--out", default="app/src/main/assets/models/tokenizer.bin", help="Output tokenizer.bin path")
+    parser.add_argument("--vocab_size", type=int, default=128256, help="Vocabulary size header to write (Llama 3.2 1B uses 128256)")
+    args = parser.parse_args()
+
+    success = convert_tokenizer(args.model, args.out, args.vocab_size)
     if success:
         print("🎉 Tokenizer conversion completed successfully!")
     else:

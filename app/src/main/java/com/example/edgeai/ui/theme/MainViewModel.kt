@@ -23,12 +23,12 @@ class MainViewModel : ViewModel() {
     var uiState by mutableStateOf(VqaUiState())
         private set
 
-    private lateinit var CLIPInference: CLIPInference
+    private lateinit var clipInference: CLIPInference
 
     fun initialize(context: Context) {
         // We only initialize the executor once
-        if (!::CLIPInference.isInitialized) {
-            CLIPInference = CLIPInference(context)
+        if (!::clipInference.isInitialized) {
+            clipInference = CLIPInference(context)
         }
     }
 
@@ -47,9 +47,9 @@ class MainViewModel : ViewModel() {
         // Launch a coroutine to run the model without freezing the UI
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true)
-            val results = CLIPInference.runInference(image)
+            val results = clipInference.runInference(image)
             val result = if (results != null) {
-                "Inference completed. Found ${results.size} output tensors."
+                "Inference completed. Found ${results.keys.size} output tensors."
             } else {
                 "Inference failed or returned no results."
             }

@@ -101,7 +101,7 @@ class LLaMAInference(private val context: Context) {
         
         // Model file names (Real LLaMA 3.2 1B files)
         private const val MODEL_FILE = "consolidated.00.pth"
-        private const val TOKENIZER_MODEL = "tokenizer.model"
+        private const val TOKENIZER_MODEL = "tokenizer.bin"
         private const val PARAMS_JSON = "params.json"
         
         // Native library functions (optional - will fallback to simulated mode if not available)
@@ -185,7 +185,7 @@ class LLaMAInference(private val context: Context) {
             // Fallback to simulated mode
             Log.w(TAG, "⚠️ Native initialization failed, using simulated LLaMA mode")
             Log.i(TAG, "🎯 Final status: realModelLoaded=$realModelLoaded, weightsLoaded=$weightsLoaded")
-            isInitialized = true
+                isInitialized = true
                 return true
 
         } catch (e: Exception) {
@@ -212,7 +212,7 @@ class LLaMAInference(private val context: Context) {
                 internalDir
             } else if (alternativeDir.exists()) {
                 alternativeDir
-            } else {
+                    } else {
                 Log.w(TAG, "⚠️ No model files found, using fallback directory")
                 internalDir
             }
@@ -254,7 +254,7 @@ class LLaMAInference(private val context: Context) {
             if (!targetDir.exists()) {
                 targetDir.mkdirs()
                 Log.i(TAG, "📁 Created target directory")
-            } else {
+                } else {
                 Log.i(TAG, "📁 Target directory already exists")
             }
 
@@ -979,13 +979,19 @@ class LLaMAInference(private val context: Context) {
             false
         }
     }
-    
+
     /**
      * Run inference on input text
      */
     suspend fun runInference(inputText: String): String {
         return try {
             Log.i(TAG, "🚀 Running LLaMA inference on: '$inputText'")
+
+            // Sanitize input to avoid QNN tokenizer corruption and remove emojis
+            val cleanInput = inputText
+                .replace(Regex("[^\\x09\\x0A\\x0D\\x20-\\x7E]"), " ") // keep printable ASCII and whitespace
+                .replace(Regex("\\s+"), " ")
+                .trim()
             
             if (!isInitialized) {
                 Log.w(TAG, "⚠️ Model not initialized, initializing now...")
@@ -997,10 +1003,15 @@ class LLaMAInference(private val context: Context) {
                 try {
                     Log.i(TAG, "🔄 Attempting native inference...")
                     // Try real ExecuTorch + QNN inference
-                    val response = nativeGenerateRealResponse(inputText, 100, 0.7f)
+                    val response = nativeGenerateRealResponse(cleanInput, 100, 0.7f)
                     if (response.isNotEmpty() && !response.startsWith("Error:")) {
                         Log.i(TAG, "✅ Real ExecuTorch + QNN inference successful")
-                        return response
+                        // Sanitize output to ensure no emojis or non-ASCII in demo
+                        val responseSanitized = response
+                            .replace(Regex("[^\\x09\\x0A\\x0D\\x20-\\x7E]"), " ")
+                            .replace(Regex("\\s+"), " ")
+                            .trim()
+                        return responseSanitized
                     } else {
                         Log.w(TAG, "⚠️ Real ExecuTorch inference failed, using simulated mode")
                     }
@@ -1011,7 +1022,12 @@ class LLaMAInference(private val context: Context) {
             
             // Fallback to simulated inference
             Log.i(TAG, "🔄 Using simulated LLaMA inference")
-            runSimulatedInference(inputText)
+            val simResponse = runSimulatedInference(cleanInput)
+            val simResponseSanitized = simResponse
+                .replace(Regex("[^\\x09\\x0A\\x0D\\x20-\\x7E]"), " ")
+                .replace(Regex("\\s+"), " ")
+                .trim()
+            simResponseSanitized
             
         } catch (e: Exception) {
             Log.e(TAG, "❌ Inference error: ${e.message}", e)
@@ -1231,7 +1247,7 @@ class LLaMAInference(private val context: Context) {
                 "That's an interesting topic! I'm an AI assistant running on your mobile device, and I'm here to help with conversations, questions, and various topics. Could you tell me more about what you'd like to discuss, or ask me a specific question?"
         }
     }
-    
+
     /**
      * Tokenize text using official LLaMA tokenizer
      */

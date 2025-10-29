@@ -1,0 +1,9 @@
+﻿# Gemma3-1B Context Binaries
+# 
+# In real implementation, this directory would contain:
+# - prefill_context.bin
+# - decode_context.bin
+# - hybrid_mode_config.bin
+# 
+# Generated using Qualcomm AI HUB with hybrid mode configuration:
+# --model_mode hybrid --max_seq_len 1024 --prefill_ar_len 128

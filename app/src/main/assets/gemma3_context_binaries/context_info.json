@@ -1,0 +1,15 @@
+{
+  "description": "Gemma-3-1B-IT Context Binaries for QNN",
+  "prefill_context": "prefill_context.bin",
+  "decode_context": "decode_context.bin",
+  "hybrid_config": "hybrid_config.bin",
+  "generated_by": "EdgeAI Gemma-3-1B-IT Integration",
+  "model_info": {
+    "name": "gemma-3-1b-it",
+    "parameters": "1B",
+    "architecture": "transformer",
+    "vocab_size": 256000,
+    "max_seq_len": 32768,
+    "dtype": "bfloat16"
+  }
+}

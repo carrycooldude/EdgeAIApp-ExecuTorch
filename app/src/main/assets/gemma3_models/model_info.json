@@ -1,0 +1,29 @@
+{
+  "model_name": "Gemma-3-1B-IT",
+  "version": "1.0",
+  "description": "Google Gemma-3-1B-IT instruction-tuned model for ExecuTorch + QNN",
+  "parameters": "1B",
+  "architecture": "transformer",
+  "vocab_size": 256000,
+  "max_seq_len": 32768,
+  "prefill_ar_len": 128,
+  "backend": "ExecuTorch + Qualcomm QNN",
+  "mode": "hybrid",
+  "temperature": 0.0,
+  "dtype": "bfloat16",
+  "multimodal": true,
+  "languages": 140,
+  "files": {
+    "model": "model.safetensors",
+    "config": "config.json",
+    "tokenizer": "tokenizer.json",
+    "tokenizer_config": "tokenizer_config.json"
+  },
+  "download_info": {
+    "source": "Hugging Face",
+    "model_id": "google/gemma-3-1b-it",
+    "converted_for": "ExecuTorch + QNN",
+    "android_optimized": true,
+    "license": "Gemma Terms of Use"
+  }
+}

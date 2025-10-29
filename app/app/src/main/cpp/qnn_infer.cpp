@@ -18,6 +18,7 @@
 class CLIPQNNInference {
 private:
     QnnInterface_t* qnnInterface = nullptr;
+    Qnn_BackendHandle_t backend = nullptr;
     Qnn_ContextHandle_t context = nullptr;
     Qnn_GraphHandle_t graph = nullptr;
     std::vector<Qnn_Tensor_t> inputTensors;
@@ -27,23 +28,18 @@ private:
 public:
     bool initialize(const std::string& modelPath) {
         try {
-            LOGI("🔧 Initializing QNN for CLIP inference...");
+            LOGI("Initializing QNN for CLIP inference...");
+            LOGI("Model path: %s", modelPath.c_str());
 
-            // Initialize QNN interface
-            // Note: Actual QNN initialization code depends on your QNN SDK version
-            // This is a template - adjust based on your specific QNN setup
-
-            // TODO: Load DLC model file
-            // TODO: Create QNN context
-            // TODO: Create QNN graph
-            // TODO: Setup input/output tensors
-
+            // Simplified initialization: Use mock mode for now
+            // Full QNN initialization requires SDK headers and runtime libs
             initialized = true;
-            LOGI("✅ QNN CLIP inference initialized successfully");
+            LOGI("QNN CLIP inference initialized (mock mode)");
+            LOGI("Using mock inference - QNN SDK integration pending");
             return true;
 
         } catch (const std::exception& e) {
-            LOGE("❌ QNN initialization failed: %s", e.what());
+            LOGE("QNN initialization failed: %s", e.what());
             return false;
         }
     }
@@ -57,7 +53,7 @@ public:
         }
 
         try {
-            LOGI("🚀 Running QNN inference...");
+            LOGI("Running QNN inference...");
 
             // TODO: Set input tensor data
             // TODO: Execute graph
@@ -67,20 +63,31 @@ public:
             std::vector<float> mockOutput(512, 0.1f); // CLIP embedding size
             results["image_features"] = mockOutput;
 
-            LOGI("✅ QNN inference completed");
+            LOGI("QNN inference completed");
             return results;
 
         } catch (const std::exception& e) {
-            LOGE("❌ QNN inference failed: %s", e.what());
+            LOGE("QNN inference failed: %s", e.what());
             return results;
         }
     }
 
     void release() {
         if (initialized) {
-            // TODO: Cleanup QNN resources
+            if (graph) {
+                qnnInterface ? qnnInterface->graphFree(graph) : (Qnn_ErrorHandle_t)0;
+                graph = nullptr;
+            }
+            if (context) {
+                qnnInterface ? qnnInterface->contextFree(context) : (Qnn_ErrorHandle_t)0;
+                context = nullptr;
+            }
+            if (backend) {
+                qnnInterface ? qnnInterface->backendFree(backend) : (Qnn_ErrorHandle_t)0;
+                backend = nullptr;
+            }
             initialized = false;
-            LOGI("🧹 QNN resources released");
+            LOGI("QNN resources released");
         }
     }
 };

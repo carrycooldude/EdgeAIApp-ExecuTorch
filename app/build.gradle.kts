@@ -15,8 +15,8 @@ android {
         applicationId = "com.example.edgeai"
         minSdk = 24
         targetSdk = 36
-        versionCode = 4
-        versionName = "1.4.0"
+        versionCode = 5
+        versionName = "1.5.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         
@@ -111,6 +111,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
+    
+    // AppCompat for activities
+    implementation("androidx.appcompat:appcompat:1.6.1")
     
     // Additional ML dependencies for LLaMA
     implementation("com.google.code.gson:gson:2.10.1")

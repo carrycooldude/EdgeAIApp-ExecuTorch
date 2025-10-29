@@ -1,4 +1,4 @@
-# EdgeAI - Real ExecuTorch + QNN Integration
+﻿# EdgeAI - Real ExecuTorch + QNN Integration
 
 [![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/carrycooldude/EdgeAIApp-ExecuTorch)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -8,15 +8,15 @@
 
 > **Real Llama3.2-1B inference on Android with ExecuTorch + Qualcomm QNN backend**
 
-## 🚀 **What's New in v1.3.0**
+## ðŸš€ **What's New in v1.3.0**
 
-- ✅ **Real ExecuTorch Integration**: Proper .pte model loading instead of manual implementation
-- ✅ **QNN Backend Support**: Hardware acceleration with v79 context binaries
-- ✅ **Actual Llama3.2-1B**: Uses real model weights, not simulated responses
-- ✅ **Improved Architecture**: Clean separation of concerns and proper documentation
-- ✅ **Better Performance**: Optimized inference pipeline with hardware acceleration
+- âœ… **Real ExecuTorch Integration**: Proper .pte model loading instead of manual implementation
+- âœ… **QNN Backend Support**: Hardware acceleration with v79 context binaries
+- âœ… **Actual Llama3.2-1B**: Uses real model weights, not simulated responses
+- âœ… **Improved Architecture**: Clean separation of concerns and proper documentation
+- âœ… **Better Performance**: Optimized inference pipeline with hardware acceleration
 
-## 📋 **Table of Contents**
+## ðŸ“‹ **Table of Contents**
 
 - [Overview](#overview)
 - [Features](#features)
@@ -28,7 +28,7 @@
 - [Contributing](#contributing)
 - [License](#license)
 
-## 🎯 **Overview**
+## ðŸŽ¯ **Overview**
 
 EdgeAI is an Android application that demonstrates **real Llama3.2-1B inference** using ExecuTorch with Qualcomm QNN backend. Unlike previous versions that used simulated responses, this implementation uses the **actual trained model** with hardware acceleration.
 
@@ -36,45 +36,45 @@ EdgeAI is an Android application that demonstrates **real Llama3.2-1B inference*
 
 | **Previous Versions** | **v1.3.0 (Current)** |
 |----------------------|---------------------|
-| ❌ Simulated responses | ✅ Real model inference |
-| ❌ Manual transformer layers | ✅ ExecuTorch runtime |
-| ❌ Random weights | ✅ Actual Llama3.2-1B weights |
-| ❌ CPU-only operations | ✅ Hardware acceleration (HTP/DSP) |
-| ❌ Basic tokenization | ✅ Real SentencePiece tokenizer |
+| âŒ Simulated responses | âœ… Real model inference |
+| âŒ Manual transformer layers | âœ… ExecuTorch runtime |
+| âŒ Random weights | âœ… Actual Llama3.2-1B weights |
+| âŒ CPU-only operations | âœ… Hardware acceleration (HTP/DSP) |
+| âŒ Basic tokenization | âœ… Real SentencePiece tokenizer |
 
-## ✨ **Features**
+## âœ¨ **Features**
 
 ### **Core Features**
-- 🧠 **Real Llama3.2-1B Inference**: Uses actual trained model weights
-- ⚡ **Hardware Acceleration**: Qualcomm HTP/DSP acceleration via QNN
-- 🔧 **ExecuTorch Integration**: Proper .pte model loading and execution
-- 📱 **Android Native**: Optimized for mobile devices
-- 🌐 **Multi-language Support**: Real tokenizer with proper encoding
+- ðŸ§  **Real Llama3.2-1B Inference**: Uses actual trained model weights
+- âš¡ **Hardware Acceleration**: Qualcomm HTP/DSP acceleration via QNN
+- ðŸ”§ **ExecuTorch Integration**: Proper .pte model loading and execution
+- ðŸ“± **Android Native**: Optimized for mobile devices
+- ðŸŒ **Multi-language Support**: Real tokenizer with proper encoding
 
 ### **Technical Features**
-- 📦 **Context Binary Support**: v79/SoC Model-69 compatibility
-- 🎯 **Optimized Performance**: ExecuTorch optimizations + QNN acceleration
-- 🔒 **Secure Model Loading**: External storage for large models
-- 📊 **Real-time Inference**: Fast response generation
-- 🛠️ **Developer Friendly**: Clean API and comprehensive documentation
+- ðŸ“¦ **Context Binary Support**: v79/SoC Model-69 compatibility
+- ðŸŽ¯ **Optimized Performance**: ExecuTorch optimizations + QNN acceleration
+- ðŸ”’ **Secure Model Loading**: External storage for large models
+- ðŸ“Š **Real-time Inference**: Fast response generation
+- ðŸ› ï¸ **Developer Friendly**: Clean API and comprehensive documentation
 
-## 🏗️ **Architecture**
+## ðŸ—ï¸ **Architecture**
 
 ### **High-Level Architecture**
 
 ```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Android App   │    │   ExecuTorch     │    │   Qualcomm QNN  │
-│                 │    │                  │    │                 │
-│  ┌───────────┐  │    │  ┌─────────────┐ │    │  ┌───────────┐  │
-│  │ Kotlin UI │  │◄──►│  │ Runtime     │ │◄──►│  │ HTP/DSP   │  │
-│  └───────────┘  │    │  │ (.pte model)│ │    │  │ Backend   │  │
-│  ┌───────────┐  │    │  └─────────────┘ │    │  └───────────┘  │
-│  │ JNI Layer │  │◄──►│  ┌─────────────┐ │    │  ┌───────────┐  │
-│  └───────────┘  │    │  │ Tokenizer   │ │    │  │ Context   │  │
-│                 │    │  │ (SentencePiece)│    │  │ Binaries  │  │
-│                 │    │  └─────────────┘ │    │  └───────────┘  │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   Android App   â”‚    â”‚   ExecuTorch     â”‚    â”‚   Qualcomm QNN  â”‚
+â”‚                 â”‚    â”‚                  â”‚    â”‚                 â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚
+â”‚  â”‚ Kotlin UI â”‚  â”‚â—„â”€â”€â–ºâ”‚  â”‚ Runtime     â”‚ â”‚â—„â”€â”€â–ºâ”‚  â”‚ HTP/DSP   â”‚  â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚    â”‚  â”‚ (.pte model)â”‚ â”‚    â”‚  â”‚ Backend   â”‚  â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚
+â”‚  â”‚ JNI Layer â”‚  â”‚â—„â”€â”€â–ºâ”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚    â”‚  â”‚ Tokenizer   â”‚ â”‚    â”‚  â”‚ Context   â”‚  â”‚
+â”‚                 â”‚    â”‚  â”‚ (SentencePiece)â”‚    â”‚  â”‚ Binaries  â”‚  â”‚
+â”‚                 â”‚    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### **Implementation Layers**
@@ -85,7 +85,7 @@ EdgeAI is an Android application that demonstrates **real Llama3.2-1B inference*
 4. **QNN Backend**: Hardware acceleration layer
 5. **Model Layer**: Llama3.2-1B with real weights
 
-## 🚀 **Quick Start**
+## ðŸš€ **Quick Start**
 
 ### **Prerequisites**
 
@@ -104,10 +104,10 @@ EdgeAI is an Android application that demonstrates **real Llama3.2-1B inference*
    ```
 
 2. **Setup ExecuTorch + QNN**
-   ```bash
+```bash
    # Run setup script
    .\scripts\setup_real_executorch.ps1
-   ```
+```
 
 3. **Build and install**
    ```bash
@@ -116,7 +116,7 @@ EdgeAI is an Android application that demonstrates **real Llama3.2-1B inference*
    ```
 
 4. **Copy model files to device**
-   ```bash
+```bash
    .\scripts\copy_model_to_device.ps1
    ```
 
@@ -127,25 +127,25 @@ EdgeAI is an Android application that demonstrates **real Llama3.2-1B inference*
 3. Enter your prompt and tap "Generate"
 4. Enjoy real Llama3.2-1B responses!
 
-## 📚 **Documentation**
+## ðŸ“š **Documentation**
 
 ### **Technical Documentation**
-- 📖 [Real ExecuTorch + QNN Integration](docs/technical/REAL_EXECUTORCH_QNN_INTEGRATION.md)
-- 🔍 [Implementation Analysis](docs/technical/IMPLEMENTATION_ANALYSIS.md)
-- 🏗️ [Architecture Overview](docs/technical/ARCHITECTURE.md)
+- ðŸ“– [Real ExecuTorch + QNN Integration](docs/technical/REAL_EXECUTORCH_QNN_INTEGRATION.md)
+- ðŸ” [Implementation Analysis](docs/technical/IMPLEMENTATION_ANALYSIS.md)
+- ðŸ—ï¸ [Architecture Overview](docs/technical/ARCHITECTURE.md)
 
 ### **Setup Guides**
-- ⚙️ [Qualcomm AI HUB Setup](docs/setup/QUALCOMM_AIHUB_SETUP.md)
-- 🔧 [ExecuTorch Configuration](docs/setup/EXECUTORCH_SETUP.md)
-- 📱 [Android Development Setup](docs/setup/ANDROID_SETUP.md)
+- âš™ï¸ [Qualcomm AI HUB Setup](docs/setup/QUALCOMM_AIHUB_SETUP.md)
+- ðŸ”§ [ExecuTorch Configuration](docs/setup/EXECUTORCH_SETUP.md)
+- ðŸ“± [Android Development Setup](docs/setup/ANDROID_SETUP.md)
 
 ### **Release Notes**
-- 📋 [v1.3.0 Release Notes](docs/releases/RELEASE_NOTES_v1.3.0.md)
-- 📋 [v1.2.0 Release Notes](docs/releases/RELEASE_NOTES_v1.2.0.md)
-- 📋 [v1.1.0 Release Notes](docs/releases/RELEASE_NOTES_v1.1.0.md)
-- 📋 [v1.0.0 Release Notes](docs/releases/RELEASE_NOTES_v1.0.0.md)
+- ðŸ“‹ [v1.3.0 Release Notes](docs/releases/RELEASE_NOTES_v1.3.0.md)
+- ðŸ“‹ [v1.2.0 Release Notes](docs/releases/RELEASE_NOTES_v1.2.0.md)
+- ðŸ“‹ [v1.1.0 Release Notes](docs/releases/RELEASE_NOTES_v1.1.0.md)
+- ðŸ“‹ [v1.0.0 Release Notes](docs/releases/RELEASE_NOTES_v1.0.0.md)
 
-## 🔧 **Setup Guide**
+## ðŸ”§ **Setup Guide**
 
 ### **1. ExecuTorch Setup**
 
@@ -192,7 +192,7 @@ python -m qnn.tools.context_binary_generator \
     --output_dir ./context_binaries
 ```
 
-## 🔬 **Technical Details**
+## ðŸ”¬ **Technical Details**
 
 ### **Model Specifications**
 
@@ -219,26 +219,26 @@ python -m qnn.tools.context_binary_generator \
 - **Model Size**: ~2.3GB
 - **Power Efficiency**: Optimized for mobile
 
-## 🛠️ **Development**
+## ðŸ› ï¸ **Development**
 
 ### **Project Structure**
 
 ```
 EdgeAI/
-├── app/                          # Android application
-│   ├── src/main/
-│   │   ├── cpp/                  # Native C++ implementation
-│   │   │   ├── real_executorch_qnn.cpp  # Main ExecuTorch + QNN integration
-│   │   │   ├── CMakeLists.txt    # Build configuration
-│   │   │   └── ...
-│   │   ├── java/                 # Kotlin/Java code
-│   │   └── assets/               # Model files and resources
-├── docs/                         # Documentation
-│   ├── technical/                # Technical documentation
-│   ├── setup/                    # Setup guides
-│   └── releases/                 # Release notes
-├── scripts/                      # Build and setup scripts
-└── external_models/              # External model files
+â”œâ”€â”€ app/                          # Android application
+â”‚   â”œâ”€â”€ src/main/
+â”‚   â”‚   â”œâ”€â”€ cpp/                  # Native C++ implementation
+â”‚   â”‚   â”‚   â”œâ”€â”€ real_executorch_qnn.cpp  # Main ExecuTorch + QNN integration
+â”‚   â”‚   â”‚   â”œâ”€â”€ CMakeLists.txt    # Build configuration
+â”‚   â”‚   â”‚   â””â”€â”€ ...
+â”‚   â”‚   â”œâ”€â”€ java/                 # Kotlin/Java code
+â”‚   â”‚   â””â”€â”€ assets/               # Model files and resources
+â”œâ”€â”€ docs/                         # Documentation
+â”‚   â”œâ”€â”€ technical/                # Technical documentation
+â”‚   â”œâ”€â”€ setup/                    # Setup guides
+â”‚   â””â”€â”€ releases/                 # Release notes
+â”œâ”€â”€ scripts/                      # Build and setup scripts
+â””â”€â”€ external_models/              # External model files
 ```
 
 ### **Building from Source**
@@ -264,7 +264,7 @@ EdgeAI/
 .\gradlew connectedAndroidTest
 ```
 
-## 🤝 **Contributing**
+## ðŸ¤ **Contributing**
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
@@ -283,19 +283,20 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 - Add comments for complex logic
 - Maintain consistent formatting
 
-## 📄 **License**
+## ðŸ“„ **License**
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 **Acknowledgments**
+## ðŸ™ **Acknowledgments**
 
 - [ExecuTorch](https://github.com/pytorch/executorch) - PyTorch's mobile inference framework
 - [Qualcomm AI Stack](https://developer.qualcomm.com/software/ai-stack) - AI acceleration platform
 - [Meta LLaMA](https://github.com/meta-llama) - The LLaMA model family
 - [Android NDK](https://developer.android.com/ndk) - Native development kit
 
-## 📞 **Support**
+## ðŸ“ž **Support**
 
+<<<<<<< HEAD
 - 📧 Email: rawatkari554@gmail.com
 - 🐛 Issues: [GitHub Issues](https://github.com/carrycooldude/EdgeAIApp-ExecuTorch/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/carrycooldude/EdgeAIApp-ExecuTorch/discussions)
@@ -303,3 +304,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Made with ❤️ for the AI community**
+=======
+- ðŸ“§ Email: carrycooldude@example.com
+- ðŸ› Issues: [GitHub Issues](https://github.com/carrycooldude/EdgeAIApp-ExecuTorch/issues)
+- ðŸ’¬ Discussions: [GitHub Discussions](https://github.com/carrycooldude/EdgeAIApp-ExecuTorch/discussions)
+
+---
+
+**Made with â¤ï¸ for the AI community**
+>>>>>>> 2713468 (feat: Integrate ExecuTorch+QNN for Llama 3.2 1B with tokenizer fix and CLIP QNN support)

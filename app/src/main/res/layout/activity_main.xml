@@ -28,6 +28,30 @@
             android:textColor="#666666"
             android:layout_marginBottom="16dp" />
 
+        <Button
+            android:id="@+id/gemma3TestButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🧪 Test Gemma3-1B Model"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="#4CAF50"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp" />
+
+        <Button
+            android:id="@+id/clipTestButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🖼️ Test ExecuTorch CLIP"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="#2196F3"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp" />
+
         <!-- Model Selection -->
         <TextView
             android:layout_width="match_parent"

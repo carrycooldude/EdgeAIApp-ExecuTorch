@@ -23,8 +23,8 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.example.edgeai.ml.CLIPInference
 import com.example.edgeai.ml.LLaMAInference
+import com.example.edgeai.ml.CLIPInference
 import kotlinx.coroutines.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -56,6 +56,8 @@ class MainActivity : Activity() {
     private lateinit var maxTokensText: TextView
     private lateinit var clearTextButton: Button
     private lateinit var exampleButton: Button
+    private lateinit var gemma3TestButton: Button
+    private lateinit var clipTestButton: Button
 
     // ML Components
     private var clipInference: CLIPInference? = null
@@ -75,7 +77,7 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.i(TAG, "🚀 Starting EdgeAI CLIP Demo")
+        Log.i(TAG, "Starting EdgeAI CLIP Demo")
 
         initializeViews()
         requestPermissions()
@@ -106,7 +108,9 @@ class MainActivity : Activity() {
             maxTokensSeekBar = findViewById(R.id.maxTokensSeekBar)
             maxTokensText = findViewById(R.id.maxTokensText)
             clearTextButton = findViewById(R.id.clearTextButton)
-            exampleButton = findViewById(R.id.exampleButton)
+        exampleButton = findViewById(R.id.exampleButton)
+        gemma3TestButton = findViewById(R.id.gemma3TestButton)
+        clipTestButton = findViewById(R.id.clipTestButton)
 
             // Set up model selection listener
             modelSelectionGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -118,11 +122,11 @@ class MainActivity : Activity() {
 
             // Set up button click listeners
             captureButton.setOnClickListener {
-                Log.i(TAG, "📷 Camera button clicked")
+                Log.i(TAG, "Camera button clicked")
                 captureImage()
             }
             galleryButton.setOnClickListener {
-                Log.i(TAG, "🖼️ Gallery button clicked")
+                Log.i(TAG, "Gallery button clicked")
                 selectFromGallery()
             }
             clearTextButton.setOnClickListener {
@@ -133,6 +137,19 @@ class MainActivity : Activity() {
                 Log.i(TAG, "💡 Example button clicked")
                 loadExamplePrompt()
             }
+            
+        gemma3TestButton.setOnClickListener {
+            Log.i(TAG, "🧪 Gemma3 test button clicked")
+            val intent = Intent(this, com.example.edgeai.ui.ExecutorTorchGemma3TestActivity::class.java)
+            startActivity(intent)
+        }
+
+        clipTestButton.setOnClickListener {
+            Log.i(TAG, "🖼️ CLIP test button clicked")
+            val intent = Intent(this, com.example.edgeai.ui.ExecutorTorchCLIPTestActivity::class.java)
+            startActivity(intent)
+        }
+            
             inferenceButton.setOnClickListener {
                 Log.i(TAG, "🚀 Inference button clicked")
                 runInference()
@@ -201,7 +218,7 @@ class MainActivity : Activity() {
         )
         val randomExample = examples.random()
         textInput.setText(randomExample)
-        Log.i(TAG, "💡 Loaded example prompt: ${randomExample.take(50)}...")
+        Log.i(TAG, "Loaded example prompt: ${randomExample.take(50)}...")
     }
 
     /**
@@ -210,27 +227,35 @@ class MainActivity : Activity() {
     private fun initializeModels() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                Log.i(TAG, "🔧 Initializing simplified models...")
+        Log.i(TAG, "Initializing simplified models...")
 
-                // Initialize CLIP (simplified)
-                clipInference = CLIPInference(this@MainActivity)
-                val clipSuccess = clipInference?.initialize() ?: false
+                // Initialize CLIP (QNN DLC)
+                var clipSuccess = false
+                try {
+                    Log.i(TAG, "🚀 Creating CLIPInference instance...")
+                    clipInference = CLIPInference(this@MainActivity)
+                    clipSuccess = clipInference?.initialize() == true
+                    Log.i(TAG, "📊 CLIP init result: $clipSuccess")
+                } catch (e: Exception) {
+                    Log.e(TAG, "❌ CLIP initialization failed: ${e.message}", e)
+                    clipSuccess = false
+                }
 
                 // Initialize LLaMA (simplified)
-                Log.i(TAG, "🚀 Creating LLaMAInference instance...")
+                Log.i(TAG, "Creating LLaMAInference instance...")
                 llamaInference = LLaMAInference(this@MainActivity)
-                Log.i(TAG, "🔧 Calling LLaMA initialize()...")
+                Log.i(TAG, "Calling LLaMA initialize()...")
                 val llamaSuccess = try {
                     llamaInference?.initialize() ?: false
                 } catch (e: Exception) {
-                    Log.e(TAG, "❌ LLaMA initialization failed: ${e.message}", e)
+                    Log.e(TAG, "LLaMA initialization failed: ${e.message}", e)
                     false
                 }
-                Log.i(TAG, "📊 LLaMA initialization result: $llamaSuccess")
+                Log.i(TAG, "LLaMA initialization result: $llamaSuccess")
 
                 withContext(Dispatchers.Main) {
                     val status = buildString {
-                        append("✅ Models Status:\n")
+                        append("Models Status:\n")
                         append("CLIP: ${if (clipSuccess) "Ready" else "Failed"}\n")
                         append("LLaMA: ${if (llamaSuccess) "Ready" else "Failed"}\n\n")
                         if (clipSuccess && llamaSuccess) {
@@ -260,38 +285,6 @@ class MainActivity : Activity() {
         }
     }
 
-    /**
-     * Initialize CLIP inference engine (legacy method)
-     */
-    private fun initializeCLIP() {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                Log.i(TAG, "🔧 Initializing CLIP inference engine...")
-
-                clipInference = CLIPInference(this@MainActivity)
-                val success = clipInference?.initialize() ?: false
-
-                withContext(Dispatchers.Main) {
-                    if (success) {
-                        resultTextView.text = "✅ CLIP model ready! Select an image to begin inference."
-                        Toast.makeText(this@MainActivity, "CLIP model loaded successfully!", Toast.LENGTH_SHORT).show()
-                        Log.i(TAG, "✅ CLIP inference engine ready")
-                    } else {
-                        resultTextView.text = "❌ Failed to initialize CLIP model. Check logs for details."
-                        Toast.makeText(this@MainActivity, "Failed to load CLIP model", Toast.LENGTH_LONG).show()
-                        Log.e(TAG, "❌ CLIP initialization failed")
-                    }
-                }
-
-            } catch (e: Exception) {
-                Log.e(TAG, "❌ CLIP initialization error: ${e.message}", e)
-                withContext(Dispatchers.Main) {
-                    resultTextView.text = "❌ CLIP initialization error: ${e.message}"
-                    Toast.makeText(this@MainActivity, "CLIP initialization failed", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
 
     /**
      * Request necessary permissions for camera and storage
@@ -308,10 +301,10 @@ class MainActivity : Activity() {
         }
 
         if (permissionsNeeded.isNotEmpty()) {
-            Log.i(TAG, "🔐 Requesting permissions: ${permissionsNeeded.joinToString()}")
+            Log.i(TAG, "Requesting permissions: ${permissionsNeeded.joinToString()}")
             ActivityCompat.requestPermissions(this, permissionsNeeded.toTypedArray(), REQUEST_PERMISSIONS)
         } else {
-            Log.i(TAG, "✅ All permissions already granted")
+            Log.i(TAG, "All permissions already granted")
         }
     }
 
@@ -455,9 +448,9 @@ class MainActivity : Activity() {
 
         // Disable button during inference
         inferenceButton.isEnabled = false
-        resultTextView.text = "🔄 Running CLIP inference on ${bitmap.width}x${bitmap.height} image..."
+        resultTextView.text = "Running CLIP inference on ${bitmap.width}x${bitmap.height} image..."
 
-        Log.i(TAG, "🚀 Starting CLIP inference...")
+        Log.i(TAG, "Starting CLIP inference...")
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -509,7 +502,7 @@ class MainActivity : Activity() {
 
         // Disable button during inference
         inferenceButton.isEnabled = false
-        resultTextView.text = "🔄 Running LLaMA inference on text: ${inputText.take(50)}..."
+        resultTextView.text = "Running LLaMA inference on text: ${inputText.take(50)}..."
 
         Log.i(TAG, "🚀 Starting LLaMA inference...")
 

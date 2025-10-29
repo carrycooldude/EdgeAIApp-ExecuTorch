@@ -1,3 +1,5 @@
+
+
 cmake_minimum_required(VERSION 3.22.1)
 project("edgeai_qnn")
 
@@ -26,12 +28,14 @@ find_library(log-lib log)
 find_library(android-lib android)
 
 # Define your native library
+# EdgeAI - On-Device AI with ExecuTorch + QNN
+# Based on: https://docs.pytorch.org/executorch/stable/backends-qualcomm.html
 add_library(edgeai_qnn SHARED
-    qnn_infer.cpp
-    qnn_manager.cpp
-    real_qnn_inference.cpp
-    improved_llama_inference.cpp
-    real_executorch_qnn.cpp # Real ExecuTorch + QNN integration
+    # ExecuTorch + QNN implementations
+    real_executorch_qnn.cpp      # ExecuTorch + QNN for LLaMA inference
+    executorch_gemma3.cpp         # ExecuTorch + QNN for Gemma3-1B inference
+    executorch_clip_proper.cpp   # ExecuTorch + QNN for CLIP inference
+    qnn_infer.cpp                # JNI bridge for QNN CLIP DLC path (mock/real)
 )
 
 # Set properties for 16 KB page size compatibility
