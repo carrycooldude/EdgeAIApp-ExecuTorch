@@ -84,7 +84,7 @@ EdgeAI is an Android application that demonstrates **real Llama3.2-1B inference*
 4. **QNN Backend**: Hardware acceleration layer
 5. **Model Layer**: Llama3.2-1B with real weights
 
-## ðŸš€ **Quick Start**
+## **Quick Start**
 
 ### **Prerequisites**
 
@@ -263,7 +263,7 @@ EdgeAI/
 .\gradlew connectedAndroidTest
 ```
 
-## ðŸ¤ **Contributing**
+## **Contributing**
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
@@ -295,7 +295,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## **Support**
 
-<<<<<<< HEAD
 - 📧 Email: rawatkari554@gmail.com
 - 🐛 Issues: [GitHub Issues](https://github.com/carrycooldude/EdgeAIApp-ExecuTorch/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/carrycooldude/EdgeAIApp-ExecuTorch/discussions)
@@ -303,12 +302,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Made with ❤️ for the AI community**
-=======
-- Email: carrycooldude@example.com
-- Issues: [GitHub Issues](https://github.com/carrycooldude/EdgeAIApp-ExecuTorch/issues)
-- Discussions: [GitHub Discussions](https://github.com/carrycooldude/EdgeAIApp-ExecuTorch/discussions)
-
----
-
-**Made with â¤ï¸ for the AI community**
->>>>>>> 2713468 (feat: Integrate ExecuTorch+QNN for Llama 3.2 1B with tokenizer fix and CLIP QNN support)
