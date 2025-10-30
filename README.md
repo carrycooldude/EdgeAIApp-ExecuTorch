@@ -63,18 +63,17 @@ EdgeAI is an Android application that demonstrates **real Llama3.2-1B inference*
 ### **High-Level Architecture**
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   Android App   â”‚    â”‚   ExecuTorch     â”‚    â”‚   Qualcomm QNN  â”‚
-â”‚                 â”‚    â”‚                  â”‚    â”‚                 â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚
-â”‚  â”‚ Kotlin UI â”‚  â”‚â—„â”€â”€â–ºâ”‚  â”‚ Runtime     â”‚ â”‚â—„â”€â”€â–ºâ”‚  â”‚ HTP/DSP   â”‚  â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚    â”‚  â”‚ (.pte model)â”‚ â”‚    â”‚  â”‚ Backend   â”‚  â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚
-â”‚  â”‚ JNI Layer â”‚  â”‚â—„â”€â”€â–ºâ”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚    â”‚  â”‚ Tokenizer   â”‚ â”‚    â”‚  â”‚ Context   â”‚  â”‚
-â”‚                 â”‚    â”‚  â”‚ (SentencePiece)â”‚    â”‚  â”‚ Binaries  â”‚  â”‚
-â”‚                 â”‚    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
++-----------------+     +-------------------+     +-----------------+
+|   Android App   |     |   ExecuTorch     |     |   Qualcomm QNN  |
+|                 |     |                   |     |                 |
+|  +-----------+  | <-> |  +-------------+ | <-> |  +-----------+  |
+|  | Kotlin UI |  |     |  | Runtime     | |     |  | HTP/DSP   |  |
+|  +-----------+  |     |  | (.pte model)| |     |  | Backend   |  |
+|  +-----------+  | <-> |  +-------------+ | <-> |  +-----------+  |
+|  | JNI Layer |  |     |  | Tokenizer   | |     |  | Context   |  |
+|  +-----------+  |     |  | (SentencePiece) |   |  +-----------+  |
+|                 |     |  +-------------+ |     |                 |
++-----------------+     +-------------------+     +-----------------+
 ```
 
 ### **Implementation Layers**
@@ -225,20 +224,20 @@ python -m qnn.tools.context_binary_generator \
 
 ```
 EdgeAI/
-â”œâ”€â”€ app/                          # Android application
-â”‚   â”œâ”€â”€ src/main/
-â”‚   â”‚   â”œâ”€â”€ cpp/                  # Native C++ implementation
-â”‚   â”‚   â”‚   â”œâ”€â”€ real_executorch_qnn.cpp  # Main ExecuTorch + QNN integration
-â”‚   â”‚   â”‚   â”œâ”€â”€ CMakeLists.txt    # Build configuration
-â”‚   â”‚   â”‚   â””â”€â”€ ...
-â”‚   â”‚   â”œâ”€â”€ java/                 # Kotlin/Java code
-â”‚   â”‚   â””â”€â”€ assets/               # Model files and resources
-â”œâ”€â”€ docs/                         # Documentation
-â”‚   â”œâ”€â”€ technical/                # Technical documentation
-â”‚   â”œâ”€â”€ setup/                    # Setup guides
-â”‚   â””â”€â”€ releases/                 # Release notes
-â”œâ”€â”€ scripts/                      # Build and setup scripts
-â””â”€â”€ external_models/              # External model files
+|-- app/                          # Android application
+|   |-- src/main/
+|   |   |-- cpp/                  # Native C++ implementation
+|   |   |   |-- real_executorch_qnn.cpp  # Main ExecuTorch + QNN integration
+|   |   |   |-- CMakeLists.txt    # Build configuration
+|   |   |   `-- ...
+|   |   |-- java/                 # Kotlin/Java code
+|   |   `-- assets/               # Model files and resources
+|-- docs/                         # Documentation
+|   |-- technical/                # Technical documentation
+|   |-- setup/                    # Setup guides
+|   `-- releases/                 # Release notes
+|-- scripts/                      # Build and setup scripts
+`-- external_models/              # External model files
 ```
 
 ### **Building from Source**
