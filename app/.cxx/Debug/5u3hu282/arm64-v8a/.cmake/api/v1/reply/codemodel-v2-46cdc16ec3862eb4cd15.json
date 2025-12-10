@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "edgeai_qnn::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-edgeai_qnn-Debug-5ed41babc494b78b25ff.json",
+					"jsonFile" : "target-edgeai_qnn-Debug-2d4f573ec5e32ff57676.json",
 					"name" : "edgeai_qnn",
 					"projectIndex" : 0
 				}
@@ -49,7 +49,7 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/rawat/AndroidStudioProjects/EdgeAI/app/.cxx/Debug/5u3hu282/x86",
+		"build" : "C:/Users/rawat/AndroidStudioProjects/EdgeAI/app/.cxx/Debug/5u3hu282/arm64-v8a",
 		"source" : "C:/Users/rawat/AndroidStudioProjects/EdgeAI/app/src/main/cpp"
 	},
 	"version" : 

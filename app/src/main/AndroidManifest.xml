@@ -26,7 +26,8 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.EdgeAI">
+            android:theme="@style/Theme.EdgeAI"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,11 +48,6 @@
             android:name=".ui.ExecutorTorchGemma3TestActivity"
             android:exported="true"
             android:label="Gemma3-1B Test"
-            android:theme="@style/Theme.EdgeAI" />
-        <activity
-            android:name=".ui.ExecutorTorchCLIPTestActivity"
-            android:exported="true"
-            android:label="ExecuTorch CLIP Test"
             android:theme="@style/Theme.EdgeAI" />
     </application>
 

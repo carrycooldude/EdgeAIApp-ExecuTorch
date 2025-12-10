@@ -2,169 +2,61 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="#FAFAFA">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="24dp">
 
+        <!-- Header -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="EdgeAI Multi-Model Demo"
-            android:textSize="24sp"
+            android:text="ExecuTorch CLIP"
+            android:textSize="28sp"
             android:textStyle="bold"
+            android:textColor="#333333"
             android:gravity="center"
-            android:layout_marginBottom="8dp" />
+            android:fontFamily="sans-serif-black"
+            android:layout_marginBottom="4dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CLIP Vision + LLaMA Language Models"
-            android:textSize="14sp"
+            android:text="Visual Question Answering"
+            android:textSize="16sp"
             android:gravity="center"
             android:textColor="#666666"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="32dp" />
 
-        <Button
-            android:id="@+id/gemma3TestButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🧪 Test Gemma3-1B Model"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:background="#4CAF50"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="8dp"
-            android:padding="12dp" />
-
-        <Button
-            android:id="@+id/clipTestButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🖼️ Test ExecuTorch CLIP"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:background="#2196F3"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="16dp"
-            android:padding="12dp" />
-
-        <!-- Model Selection -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select Model:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-
-        <RadioGroup
-            android:id="@+id/modelSelectionGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-
-            <RadioButton
-                android:id="@+id/clipModelRadio"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="CLIP Vision"
-                android:checked="true" />
-
-            <RadioButton
-                android:id="@+id/llamaModelRadio"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="LLaMA Text" />
-
-        </RadioGroup>
-
-        <!-- CLIP Image Section -->
+        <!-- Image Card -->
         <LinearLayout
-            android:id="@+id/clipImageSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible">
-
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:padding="2dp"
+            android:elevation="4dp"
+            android:layout_marginBottom="24dp">
+            
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:scaleType="centerInside"
-                android:background="@android:color/darker_gray"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="Selected image for CLIP inference" />
-
+                android:scaleType="fitCenter"
+                android:background="#EEEEEE"
+                android:contentDescription="Image for analysis" />
         </LinearLayout>
-
-        <!-- LLaMA Text Input Section -->
+        
+        <!-- Controls -->
         <LinearLayout
-            android:id="@+id/llamaTextSection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enter your prompt:"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <EditText
-                android:id="@+id/textInput"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:gravity="top|start"
-                android:hint="Type your text prompt here..."
-                android:inputType="textMultiLine|textCapSentences"
-                android:maxLines="5"
-                android:padding="12dp"
-                android:background="@android:color/white"
-                android:layout_marginBottom="16dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Max Tokens:"
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp" />
-
-            <SeekBar
-                android:id="@+id/maxTokensSeekBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="200"
-                android:progress="100"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:id="@+id/maxTokensText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="100 tokens"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_marginBottom="16dp" />
-
-        </LinearLayout>
-
-        <!-- CLIP Action Buttons -->
-        <LinearLayout
-            android:id="@+id/clipActionButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:layout_marginBottom="24dp">
 
             <Button
                 android:id="@+id/captureButton"
@@ -172,6 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="📷 Camera"
+                android:backgroundTint="#2196F3"
+                android:textColor="@android:color/white"
                 android:layout_marginEnd="8dp" />
 
             <Button
@@ -180,61 +74,57 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="🖼️ Gallery"
+                android:backgroundTint="#2196F3"
+                android:textColor="@android:color/white"
                 android:layout_marginStart="8dp" />
 
         </LinearLayout>
 
-        <!-- LLaMA Action Buttons -->
-        <LinearLayout
-            android:id="@+id/llamaActionButtons"
+        <!-- Question Input -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:text="Question (Optional)"
+            android:textStyle="bold"
+            android:textColor="#555555"
+            android:layout_marginBottom="8dp"/>
 
-            <Button
-                android:id="@+id/clearTextButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="🗑️ Clear"
-                android:layout_marginEnd="8dp" />
+        <EditText
+            android:id="@+id/textInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:padding="12dp"
+            android:layout_marginBottom="24dp"
+            android:hint="e.g., 'Is this a cat?'"
+            android:inputType="textCapSentences"
+            android:maxLines="3"
+            android:minLines="1" />
 
-            <Button
-                android:id="@+id/exampleButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="💡 Example"
-                android:layout_marginStart="8dp" />
-
-        </LinearLayout>
-
+        <!-- Run Button -->
         <Button
             android:id="@+id/inferenceButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🚀 Run Inference"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_height="60dp"
+            android:text="✨ Analyze Similarity"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#6200EE"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="24dp"
+            android:elevation="4dp" />
 
-        <ScrollView
+        <!-- Result Area -->
+        <TextView
+            android:id="@+id/resultTextView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/resultTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Initializing models..."
-                android:fontFamily="monospace"
-                android:textSize="12sp"
-                android:padding="8dp"
-                android:background="@android:color/black"
-                android:textColor="@android:color/white" />
-
-        </ScrollView>
+            android:layout_height="wrap_content"
+            android:text="Ready for inference..."
+            android:fontFamily="monospace"
+            android:textSize="14sp"
+            android:padding="16dp"
+            android:background="#E0E0E0"
+            android:textColor="#333333" />
 
     </LinearLayout>
 

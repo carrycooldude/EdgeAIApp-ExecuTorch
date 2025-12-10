@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.edgeai.ml.CLIPInference
+import com.example.edgeai.ml.ExecutorTorchCLIP
 import kotlinx.coroutines.launch
 
 // Represents the current state of our UI
@@ -23,12 +23,12 @@ class MainViewModel : ViewModel() {
     var uiState by mutableStateOf(VqaUiState())
         private set
 
-    private lateinit var clipInference: CLIPInference
+    private lateinit var clipInference: ExecutorTorchCLIP
 
     fun initialize(context: Context) {
-        // We only initialize the executor once
         if (!::clipInference.isInitialized) {
-            clipInference = CLIPInference(context)
+            clipInference = ExecutorTorchCLIP(context)
+            clipInference.initialize()
         }
     }
 
@@ -44,15 +44,14 @@ class MainViewModel : ViewModel() {
         val image = uiState.selectedImage ?: return
         val question = uiState.question
 
-        // Launch a coroutine to run the model without freezing the UI
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true)
-            val results = clipInference.runInference(image)
-            val result = if (results != null) {
-                "Inference completed. Found ${results.keys.size} output tensors."
-            } else {
-                "Inference failed or returned no results."
-            }
+            
+            val similarity = clipInference.computeImageTextSimilarity(image, question)
+            
+            val result = "Similarity Score: ${"%.4f".format(similarity)}\n\n" +
+                        "This indicates how well the text matches the image."
+            
             uiState = uiState.copy(answer = result, isLoading = false)
         }
     }
