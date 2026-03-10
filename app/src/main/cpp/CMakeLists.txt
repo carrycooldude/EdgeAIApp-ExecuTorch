@@ -32,10 +32,7 @@ find_library(android-lib android)
 # Based on: https://docs.pytorch.org/executorch/stable/backends-qualcomm.html
 add_library(edgeai_qnn SHARED
     # ExecuTorch + QNN implementations
-    real_executorch_qnn.cpp      # ExecuTorch + QNN for LLaMA inference
-    executorch_gemma3.cpp         # ExecuTorch + QNN for Gemma3-1B inference
     executorch_clip_proper.cpp   # ExecuTorch + QNN for CLIP inference
-
 )
 
 # Set properties for 16 KB page size compatibility
